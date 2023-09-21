@@ -1,24 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Navbar from './components/navbar'
-import Register from './pages/Register'
-import Home from './pages/Home'
-import BetRequest from './pages/BetRequest'
-import TribePage from './pages/TribePage'
+
+import './App.css';
+import Navbar from './components/navbar';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import BetRequest from './pages/BetRequest';
+import TribePage from './pages/TribePage';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import Login from './pages/Login';
 
 
 function App() {
+  const queryClient = new QueryClient()
 
 
   const Layout = () => {
     return (
       
-      <div className='app'>
+      <div className='p-3'>
+        <QueryClientProvider client={queryClient}>
       <Navbar/>
       <Outlet/>
+      </QueryClientProvider>
       </div>
      
        
@@ -38,6 +47,10 @@ function App() {
                 element:<Register/>,
             },
             {
+              path:"/login",
+              element:<Login/>,
+          },
+            {
               path:"/betrequest",
               element:<BetRequest/>,
           },
@@ -46,7 +59,7 @@ function App() {
               element:<Home/>,
           },
           {
-            path:"/tribepage",
+            path:"/tribepage/:id",
             element:<TribePage/>,
         },
           
