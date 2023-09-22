@@ -1,0 +1,17 @@
+@keyframes blink {
+    30% {
+        color: #4FFFB0;
+    }
+    /* 80% {
+        opacity: .2;
+    } */
+}
+
+.change{
+    color:#2C5C4B;
+    animation:blink 1.5s linear infinite;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 50px;
+    font-weight:bolder;
+    text-align: center;
+}

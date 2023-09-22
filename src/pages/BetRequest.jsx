@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import newRequest from '../utils/newRequest'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { data } from 'autoprefixer'
+import "./betrequest.css"
 
 const BetRequest = () => {
 
@@ -33,8 +34,9 @@ const BetRequest = () => {
          <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <img class="mx-auto h-[100px] w-[150px]" src="./GameLogo.png" alt="Your Company"/>
-    <h2 class="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-[#2C5C4B]"> Thank you for registering for the Games Fiesta!!</h2>
-    <h2 class="mt-10 text-center text-3xl font-medium leading-9 tracking-tight text-gray-900 ">Are you Interested in the BetTribes Competition?</h2>
+    {/* <h2 class="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-[#2C5C4B]"> Thank you for registering for the Games Fiesta!!</h2> */}
+    <h2 className="change"> Thank you for registering for the Games Fiesta!!</h2>
+    <h2 class="mt-10 text-center text-3xl font-bold text- leading-9 tracking-tight text-gray-900 ">ARE YOU INTERESTED IN THE BETTRIBES COMPETITION?</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

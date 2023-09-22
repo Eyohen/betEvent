@@ -78,7 +78,7 @@ const Register = () => {
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign up htmlFor BetWinner Event
+          Sign up For BetWinner Event
         </h2>
       </div>
 
@@ -90,7 +90,7 @@ const Register = () => {
                 htmlFor="email"
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                First Name
+                FIRST NAME
               </label>
               <label className="text-white">ignore</label>
             </div>
@@ -112,7 +112,7 @@ const Register = () => {
                 htmlFor="email"
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                Last Name
+                LAST NAME
               </label>
               <label className="text-white">ignore</label>
             </div>
@@ -134,7 +134,7 @@ const Register = () => {
                 htmlFor=""
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                Phone Number
+                PHONE NUMBER
               </label>
               <label
                 htmlFor=""
@@ -161,7 +161,7 @@ const Register = () => {
                 htmlFor="email"
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                Email address
+                EMAIL ADDRESS
               </label>
               <label
                 htmlFor="email"
@@ -189,7 +189,7 @@ const Register = () => {
                 htmlFor=""
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                Country
+                COUNTRY
               </label>
               <label
                 htmlFor=""
@@ -216,7 +216,7 @@ const Register = () => {
                 htmlFor=""
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                State
+                STATE
               </label>
               <label
                 htmlFor=""
@@ -243,7 +243,7 @@ const Register = () => {
                 htmlFor=""
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                City
+                CITY
               </label>
               <label
                 htmlFor=""
@@ -269,7 +269,7 @@ const Register = () => {
                 htmlFor=""
                 className="block text-md font-medium leading-6 text-gray-900"
               >
-                Date of Birth
+                DATE OF BIRTH
               </label>
               <label
                 htmlFor=""
@@ -298,7 +298,7 @@ const Register = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-[#2C5C4B] px-3 py-1.5 text-md font-semibold leading-6 text-[#FFC000] shadow-sm hover:bg-[#93C572] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 h-12"
             >
-              Register
+              REGISTER
             </button>
           </div>
         </form>
