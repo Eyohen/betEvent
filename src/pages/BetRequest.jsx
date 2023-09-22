@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import newRequest from '../utils/newRequest'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { data } from 'autoprefixer'
 
 const BetRequest = () => {
 
@@ -15,7 +16,7 @@ const BetRequest = () => {
     },
     onSuccess:()=>{
       // queryClient.invalidateQueries(['reviews'])
-      navigate("/home")
+      navigate("/home", { state: { betwinnerId: data.betwinnerId } })
     }
   })
 

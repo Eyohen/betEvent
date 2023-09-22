@@ -46,10 +46,17 @@ const TribePage = () => {
     const queryClient = useQueryClient()
     const mutation = useMutation({
       mutationFn: (regdata) => {
+
+        console.log('this is regdata',regdata)
     
         window.alert(JSON.stringify(regdata))
     
-        return upload(regdata, 'tribe/register', post)
+        return newRequest.post("tribe/register", regdata, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        // return upload(regdata, 'tribe/register', 'post')
       },
       onSuccess:()=>{
         queryClient.invalidateQueries(['tribesingle'])
@@ -78,7 +85,7 @@ const TribePage = () => {
     
         // Define the data object to be sent to the mutation
         const dataToSend = Object.fromEntries(formData.entries());
-        console.log(dataToSend)
+        console.log('this is data to send',dataToSend)
         // Use mutation.mutate to send the data to the backend
         mutation.mutate({...dataToSend});
     
