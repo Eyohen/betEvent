@@ -108,7 +108,7 @@ const TribePage = () => {
 
       <div>
         <div className="flex items-center justify-between">
-        <label for="" class="block text-md font-medium leading-6 text-gray-900">betwinnerId</label>
+        <label for="" class="block text-md font-medium leading-6 text-gray-900">BETWINNER ID</label>
         <label for="" class="block text-sm font-medium leading-6 text-white">ignore</label>
         </div>
         <div class="mt-2">
@@ -119,7 +119,7 @@ const TribePage = () => {
 
       <div>
           <div class="flex items-center justify-between">
-            <label for="" class="block text-md font-medium leading-6 text-gray-900">Gender</label>
+            <label for="" class="block text-md font-medium leading-6 text-gray-900">GENDER</label>
             <div class="text-sm">
               <a href="#" class="font-semibold text-white">Forgot password?</a>
             </div>
@@ -139,7 +139,7 @@ const TribePage = () => {
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="" class="block text-md font-medium leading-6 text-gray-900">Shirt Size</label>
+            <label for="" class="block text-md font-medium leading-6 text-gray-900">SHIRT SIZE</label>
             <div class="text-sm">
               <a href="#" class="font-semibold text-white">Forgot password?</a>
             </div>
@@ -159,7 +159,7 @@ const TribePage = () => {
 
         <div>
         <div className="flex items-center justify-between">
-        <label for="" class="block text-md font-medium leading-6 text-gray-900">Instagram media handle</label>
+        <label for="" class="block text-md font-medium leading-6 text-gray-900">INSTAGRAM MEDIA HANDLE</label>
         <label for="" class="block text-sm font-medium leading-6 text-white">ignore</label>
         </div>
         <div class="mt-2">
@@ -170,7 +170,7 @@ const TribePage = () => {
 
       <div>
         <div className="flex items-center justify-between">
-        <label for="" class="block text-md font-medium leading-6 text-gray-900">Email</label>
+        <label for="" class="block text-md font-medium leading-6 text-gray-900">EMAIL</label>
         <label for="" class="block text-sm font-medium leading-6 text-white">ignore</label>
         </div>
         <div class="mt-2">
@@ -181,7 +181,7 @@ const TribePage = () => {
 
       <div>
         <div className="flex items-center justify-between">
-        <label for="" class="block text-md font-medium leading-6 text-gray-900">Upload a Clear Picture</label>
+        <label for="" class="block text-md font-medium leading-6 text-gray-900">UPLOAD A CLEAR PICTURE</label>
         <label for="" class="block text-sm font-medium leading-6 text-white">ignore</label>
         </div>
 

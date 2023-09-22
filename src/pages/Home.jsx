@@ -19,7 +19,7 @@ const Home = () => {
     <div>
              <div className='font-bold text-2xl text-[#2C5C4B] mt-4'>Choose Your Tribe </div>
      
-                 <div className='grid grid-cols-5 gap-[110px] sm:grid-cols-3' >
+                 <div className='grid gap-[10px] sm:grid-cols lg:grid-cols-5 md:grid-cols-3' >
                   {isLoading? "Loading..." : error ? "Something went wrong" : (data?.data?.map((tribe)=>(
                       <TribeTiles key={tribe.id} item={tribe}/>
                   )))}
