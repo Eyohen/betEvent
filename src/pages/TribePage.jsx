@@ -60,6 +60,7 @@ const TribePage = () => {
       },
       onSuccess:()=>{
         queryClient.invalidateQueries(['tribesingle'])
+        navigate("/seeteammembers")
       }
     
     })
@@ -100,7 +101,7 @@ const TribePage = () => {
       <img class="mx-auto h-[100px] w-[150px]" src={MyLogo} alt="Your Company"/>
       <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">{data?.data?.name}</h2>
       <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">{data?.data?.memberCount}</h2>
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">{data?.data?.isFilled? "Sorry This group is filled up join another tribe" :  "Not yet filled"}</h2>
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">{data?.data?.isFilled? "Sorry This group is filled up join another tribe" :  "This group is not filled up yet"}</h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

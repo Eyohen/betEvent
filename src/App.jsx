@@ -14,6 +14,7 @@ import {
 } from '@tanstack/react-query';
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Login from './pages/Login';
+import ViewTeamMembers from './pages/ViewTeamMembers';
 
 
 function App() {
@@ -62,6 +63,10 @@ function App() {
             path:"/tribepage/:id",
             element:<TribePage/>,
         },
+        {
+          path:'/seeteammembers',
+          element:<ViewTeamMembers/>
+        }
           
         ]
     }
