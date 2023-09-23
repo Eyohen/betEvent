@@ -1,34 +1,29 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import newRequest from '../utils/newRequest'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { data } from 'autoprefixer'
 import "./betrequest.css"
 
 const BetRequest = () => {
-
   const navigate = useNavigate()
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-  const queryClient = useQueryClient()
-  const mutation = useMutation({
-    mutationFn: (betId) => {
-      return newRequest.post('tribe/check/betwinnerId',  betId);
-    },
-    onSuccess:()=>{
-      // queryClient.invalidateQueries(['reviews'])
-      navigate("/home", { state: { betwinnerId: data.betwinnerId } })
-    }
-  })
-
-  console.log(currentUser)
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const betwinnerId = e.target[0].value;
-   
-    mutation.mutate({betwinnerId})
+    console.log('betwinnerId', betwinnerId)
+
+    try {
+      const betwinnerIdCheckResponse = await newRequest.post('tribe/check/betwinnerId', { betwinnerId });
+
+      console.log(betwinnerIdCheckResponse.data)
+      const savedUserData_ = localStorage.getItem('currentUser')
+      const savedUserData = savedUserData_ ? JSON.parse(savedUserData_) : {}
+      savedUserData.betwinnerId = betwinnerId
+      localStorage.setItem('currentUser', JSON.stringify(savedUserData))
+
+      navigate('/home')
+    } catch (error) {
+      console.error(error)
+    }
   }
+
   return (
     <div>
       <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
