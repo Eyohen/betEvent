@@ -79,7 +79,8 @@ const TribePage = () => {
       savedUserData = { ...savedUserData, ...tribeRegistrationResponse.data.data };
       localStorage.setItem("currentUser", JSON.stringify(savedUserData));
 
-      navigate(`/seeteammembers/${tribeRegistrationResponse.data.data.betTribeId}`)
+      console.log(tribeRegistrationResponse.data)
+      navigate(`/seeteammembers/${id}`)
     } catch (error) {
       console.error(error);
     }
