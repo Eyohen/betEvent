@@ -14,6 +14,8 @@ import {
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import ViewTeamMembers from "./pages/ViewTeamMembers";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const queryClient = new QueryClient();
@@ -25,6 +27,7 @@ function App() {
           <Navbar />
           <Outlet />
         </QueryClientProvider>
+        <ToastContainer />
       </div>
     );
   };

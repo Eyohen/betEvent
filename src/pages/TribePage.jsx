@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import newRequest from '../utils/newRequest';
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import MyLogo from '../assets/GameLogo.png'
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const TribePage = () => {
   const [user, setUser] = useState({
@@ -79,10 +80,11 @@ const TribePage = () => {
       savedUserData = { ...savedUserData, ...tribeRegistrationResponse.data.data };
       localStorage.setItem("currentUser", JSON.stringify(savedUserData));
 
-      console.log(tribeRegistrationResponse.data)
       navigate(`/seeteammembers/${id}`)
     } catch (error) {
       console.error(error);
+      toast.error(error.response.data.message)
+      navigate(`/home`)
     }
   };
 
