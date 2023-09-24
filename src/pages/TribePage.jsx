@@ -1,20 +1,22 @@
-import React,{useRef,useState} from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import newRequest from '../utils/newRequest';
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import MyLogo from '../assets/GameLogo.png'
-import upload from '../utils/upload';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const TribePage = () => {
   const [user, setUser] = useState({
-    gender:"male",
-    shirtSize:"S",
-    email:"",
-    betwinnerId:"",
-    socials:"",
+    gender: "male",
+    shirtSize: "S",
+    email: "",
+    betwinnerId: "",
+    socials: "",
   })
   const [profileImage, setProfileImage] = useState("")
+  const navigate = useNavigate()
 
   const handleImage = (e) => {
     e.preventDefault()
@@ -24,77 +26,68 @@ const TribePage = () => {
 
   const handleChange = (e) => {
     e.preventDefault()
-    setUser((prev) =>{
-      return {...prev, [e.target.name]: e.target.value}
+    setUser((prev) => {
+      return { ...prev, [e.target.name]: e.target.value }
     })
 
   }
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  console.log(currentUser)
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) return
 
-  const {id} = useParams();
+    console.log(currentUser)
+    setUser((prev) => {
+      return { ...prev, ...currentUser }
+    })
+  }, [])
 
-  const {isLoading, error, data, refetch} = useQuery({ 
+  const { id } = useParams();
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['tribesingle'],
-     queryFn: () => newRequest.get(`tribe/${id}`).then(res=>{
+    queryFn: () => newRequest.get(`tribe/${id}`).then(res => {
       return res.data;
-     }) 
     })
-    // console.log(data)
+  })
 
-    const queryClient = useQueryClient()
-    const mutation = useMutation({
-      mutationFn: (regdata) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        console.log('this is regdata',regdata)
-    
-        window.alert(JSON.stringify(regdata))
-    
-        return newRequest.post("tribe/register", regdata, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        // return upload(regdata, 'tribe/register', 'post')
-      },
-      onSuccess:()=>{
-        queryClient.invalidateQueries(['tribesingle'])
-        navigate("/seeteammembers")
-      }
-    
-    })
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    
-        const formData = new FormData();
-    
-        // Append the file input to the FormData object
-        // formData.append('profileImage', e.target.profileImage.files[0]);
-        formData.append('profileImage', profileImage);
-    
-        // Append other form data
-        formData.append('socials', user.socials);
-        formData.append('gender', user.gender);
-        formData.append('shirtSize', user.shirtSize);
-        formData.append('betwinnerId', user.betwinnerId);
-        formData.append('email', user.email);
-        formData.append('betTribeId', id);
-    
-        window.alert(JSON.stringify(formData))
-    
-        // Define the data object to be sent to the mutation
-        const dataToSend = Object.fromEntries(formData.entries());
-        console.log('this is data to send',dataToSend)
-        // Use mutation.mutate to send the data to the backend
-        mutation.mutate({...dataToSend});
-    
-    };
+    const formData = new FormData();
+    formData.append('profileImage', profileImage);
+    formData.append('socials', user.socials);
+    formData.append('gender', user.gender);
+    formData.append('shirtSize', user.shirtSize);
+    formData.append('betwinnerId', user.betwinnerId);
+    formData.append('email', user.email);
+    formData.append('betTribeId', id);
 
+    window.alert(JSON.stringify(formData))
 
+    const dataToSend = Object.fromEntries(formData.entries());
+    try {
+      const tribeRegistrationResponse = await newRequest.post("tribe/register", dataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-   
+      // Update the user data in local storage to include betTribeLog
+      const savedUserData_ = localStorage.getItem("currentUser");
+      let savedUserData = savedUserData_
+        ? JSON.parse(savedUserData_)
+        : {};
+      savedUserData = { ...savedUserData, ...tribeRegistrationResponse.data.data };
+      localStorage.setItem("currentUser", JSON.stringify(savedUserData));
+
+      navigate(`/seeteammembers/${id}`)
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message)
+      navigate(`/home`)
+    }
+  };
+
   return (
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -146,6 +139,7 @@ const TribePage = () => {
                 pattern="[0-9]{6}" // This pattern allows only 6-digit numbers
                 title="Please enter a 6-digit number"
                 onChange={handleChange}
+                value={user.betwinnerId}
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
@@ -247,6 +241,7 @@ const TribePage = () => {
                 name="email"
                 type="email"
                 onChange={handleChange}
+                value={user.email}
                 required
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />

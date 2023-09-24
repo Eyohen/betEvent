@@ -6,16 +6,14 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Register = () => {
   const navigate = useNavigate();
-  // const [account, setAccount] = useState(false);
   const [birthday, setBirthday] = useState(null);
 
-    const today = new Date();
-    const minDate = new Date(
-      today.getFullYear() - 18,
-      today.getMonth(),
-      today.getDate()
-    );
-
+  const today = new Date();
+  const minDate = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
 
   const [user, setUser] = useState({
     firstName: "",
@@ -38,36 +36,33 @@ const Register = () => {
   const handleDateChange = (date) => {
     // Update the user state with the selected date in YYYY-MM-DD format
     setUser((prev) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-based, so add 1 and pad with '0' if necessary
-    const day = String(date.getDate()).padStart(2, "0");
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-based, so add 1 and pad with '0' if necessary
+      const day = String(date.getDate()).padStart(2, "0");
 
-    const formattedDate = `${year}-${month}-${day}`;
-          return { ...prev, birthday: formattedDate };
+      const formattedDate = `${year}-${month}-${day}`;
+      return { ...prev, birthday: formattedDate };
     });
     setBirthday(date);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const url = await upload(file)
     try {
-      console.log('this is user', user)
-      await newRequest.post(
+      console.log("this is user", user);
+      const registrationResponse = await newRequest.post(
         "register",
         user
-        // ...user, image:url
-      );
-      // localStorage.setItem("currentUser", JSON.stringify(data));
+      ).then(res => res.data);
+      
+      const participantData = registrationResponse.data.participant
+      localStorage.setItem("currentUser", JSON.stringify(participantData));
+
       navigate("/betrequest");
     } catch (err) {
       console.log(err);
     }
   };
-
-  // const accountToggle = () => {
-  //   setAccount(!account);
-  // };
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">

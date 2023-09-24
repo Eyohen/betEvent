@@ -1,59 +1,44 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import newRequest from '../utils/newRequest';
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const ViewTeamMembers = () => {
-    const {id} = useParams();
+  let { betTribeId } = useParams();
+  const navigate = useNavigate()
 
-  const {isLoading, error, data, refetch} = useQuery({ 
+  const { data } = useQuery({
     queryKey: ['tribesingle'],
-     queryFn: () => newRequest.get(`tribe/${id}`).then(res=>{
-      return res.data;
-     }) 
-    })
-    // console.log(data)
-
-    const queryClient = useQueryClient()
-    const mutation = useMutation({
-      mutationFn: (regdata) => {
-
-        console.log('this is regdata',regdata)
-    
-        window.alert(JSON.stringify(regdata))
-    
-        return newRequest.post("tribe/register", regdata, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        // return upload(regdata, 'tribe/register', 'post')
-      },
-      onSuccess:()=>{
-        queryClient.invalidateQueries(['tribesingle'])
-        navigate("/seeteammembers")
+    queryFn: () => {
+      if (!betTribeId) {
+        const savedUserData_ = localStorage.getItem('currentUser')
+        const savedUserData = savedUserData_ ? JSON.parse(savedUserData_) : {}
+        betTribeId = savedUserData.BetTribelog?.betTribe.betTribeId
+        
+        if (!betTribeId) { navigate('/login')}
       }
-    
-    })
-    
+
+      return newRequest.get(`tribe/member/logs?betTribeId=${betTribeId}`).then(res => {
+        return res.data;
+      })
+    }
+  })
+
   return (
     <div>
-        <h1 className='text-center text-[#2C5C4B] font-bold text-lg mt-5'>My Team Members</h1>
-        <div className='border p-2 mt-4 rounded-lg shadow-lg'>
+      <h1 className='text-center text-[#2C5C4B] font-bold text-lg mt-5'>My Team Members</h1>
+      {
+        Array.isArray(data?.data) && data.data.map((item) => (
+          <div className='border p-2 mt-4 rounded-lg shadow-lg' key={crypto.getRandomValues(new Uint32Array(1))[0]}>
             <div className='flex flex-row gap-2'>
-            <img src="https://images.unsplash.com/photo-1540312479395-6b36e14a5961?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80"
-            className='w-12 h-12'
-            />
-            <div>
-            <h1 className='text-lg'>name: Henry Eyo</h1>
-            <h1 className='text-lg'>instagram: h_eyo</h1>
+              <img src={item.profileImage} className='w-12 h-12' />
+              <div>
+                <h1 className='text-lg'>name: {item.Participant.firstName + ' ' + item.Participant.lastName}</h1>
+                <h1 className='text-lg'>instagram: {item.socials}</h1>
+              </div>
             </div>
-            </div>
-
-
-        </div>
-        
+          </div>
+        ))
+      }
     </div>
   )
 }
