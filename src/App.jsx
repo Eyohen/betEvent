@@ -55,7 +55,7 @@ function App() {
           element: <TribePage />,
         },
         {
-          path: "/seeteammembers",
+          path: "/seeteammembers/:id",
           element: <ViewTeamMembers />,
         },
       ],

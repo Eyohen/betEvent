@@ -49,38 +49,11 @@ const TribePage = () => {
     })
   })
 
-  const queryClient = useQueryClient()
-  const mutation = useMutation({
-    mutationFn: (regdata) => {
-
-      console.log('this is regdata', regdata)
-
-      window.alert(JSON.stringify(regdata))
-
-      return newRequest.post("tribe/register", regdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      // return upload(regdata, 'tribe/register', 'post')
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['tribesingle'])
-      navigate("/seeteammembers")
-    }
-
-  })
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-
-    // Append the file input to the FormData object
-    // formData.append('profileImage', e.target.profileImage.files[0]);
     formData.append('profileImage', profileImage);
-
-    // Append other form data
     formData.append('socials', user.socials);
     formData.append('gender', user.gender);
     formData.append('shirtSize', user.shirtSize);
@@ -90,16 +63,27 @@ const TribePage = () => {
 
     window.alert(JSON.stringify(formData))
 
-    // Define the data object to be sent to the mutation
     const dataToSend = Object.fromEntries(formData.entries());
-    console.log('this is data to send', dataToSend)
-    // Use mutation.mutate to send the data to the backend
-    mutation.mutate({ ...dataToSend });
+    try {
+      const tribeRegistrationResponse = await newRequest.post("tribe/register", dataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
+      // Update the user data in local storage to include betTribeLog
+      const savedUserData_ = localStorage.getItem("currentUser");
+      let savedUserData = savedUserData_
+        ? JSON.parse(savedUserData_)
+        : {};
+      savedUserData = { ...savedUserData, ...tribeRegistrationResponse.data.data };
+      localStorage.setItem("currentUser", JSON.stringify(savedUserData));
+
+      navigate(`/seeteammembers/${tribeRegistrationResponse.data.data.betTribeId}`)
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-
-
 
   return (
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
