@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import newRequest from "../utils/newRequest";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Intro from "../assets/Intro.png"
+import greenbg from "../assets/greenbg.png"
 
 const Register = () => {
   const navigate = useNavigate();
   const [birthday, setBirthday] = useState(null);
+const [showImagePopup, setShowImagePopup] = useState(true);
+const [isLoading, setIsLoading] = useState(false);
 
   const today = new Date();
   const minDate = new Date(
@@ -48,24 +52,60 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading to tru
     try {
       console.log("this is user", user);
-      const registrationResponse = await newRequest.post(
-        "register",
-        user
-      ).then(res => res.data);
-      
-      const participantData = registrationResponse.data.participant
+      const registrationResponse = await newRequest
+        .post("register", user)
+        .then((res) => res.data);
+
+      const participantData = registrationResponse.data.participant;
       localStorage.setItem("currentUser", JSON.stringify(participantData));
 
       navigate("/betrequest");
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false); // Set loading back to false
     }
   };
 
+  
+  const handleLoginClick = () => {
+    // Use navigate to go to the "/login" route
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    // Use a setTimeout to hide the image after 3 seconds
+    const timer = setTimeout(() => {
+      setShowImagePopup(false);
+    }, 1000);
+
+    // Clear the timer if the component unmounts
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
+    // add image Intro to background with tailwind
+
+    <div
+      className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl bg-[#F2F2F2]"
+      style={{
+        backgroundImage: `url(${greenbg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {showImagePopup && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-white z-50">
+          <img
+            className="mx-auto max-h-screen max-w-screen object-contain"
+            src={Intro}
+            alt="Popup Image"
+          />
+        </div>
+      )}
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-[100px] w-[150px]"
@@ -93,10 +133,11 @@ const Register = () => {
               <input
                 id="firstName"
                 name="firstName"
+                label="First Name"
                 type="text"
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -118,7 +159,7 @@ const Register = () => {
                 type="text"
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -145,7 +186,7 @@ const Register = () => {
                 type="number"
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -173,7 +214,7 @@ const Register = () => {
                 onChange={handleChange}
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -198,9 +239,10 @@ const Register = () => {
                 id="country"
                 name="country"
                 type="text"
+                placeholder="08123***"
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -227,7 +269,7 @@ const Register = () => {
                 type="text"
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -254,7 +296,7 @@ const Register = () => {
                 type="text"
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -283,7 +325,7 @@ const Register = () => {
                 dateFormat="yyyy-MM-dd"
                 maxDate={minDate}
                 // maxDate={today} // Optional: To prevent selecting future dates
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -292,22 +334,21 @@ const Register = () => {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-[#2C5C4B] px-3 py-1.5 text-md font-semibold leading-6 text-[#FFC000] shadow-sm hover:bg-[#93C572] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 h-12"
+              disabled={isLoading}
             >
-              REGISTER
+              {isLoading ? "Loading..." : "REGISTER"}{" "}
             </button>
           </div>
         </form>
 
-        <p className="mt-10 text-center text-md text-gray-500">
+        <p className="mt-10 text-center text-md text-black-500">
           Already have an account?
-          <Link to={"/login"}>
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-2"
-            >
-              login
-            </a>
-          </Link>
+          <button
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-2"
+            onClick={handleLoginClick}
+          >
+            Login
+          </button>
         </p>
       </div>
     </div>

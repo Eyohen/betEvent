@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
 import TribeTiles from "../components/TribeTiles";
 import newRequest from "../utils/newRequest";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { isLoading, error, data, refetch } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ["tribe"],
     queryFn: () =>
       newRequest.get("tribe").then((res) => {
@@ -18,29 +18,38 @@ const Home = () => {
     ? JSON.parse(userDataInLocalStorage)
     : {};
   const userBetTribeId = userData?.BetTribeLog?.betTribeId;
-  console.log(userData.BetTribeLog)
 
   return (
-    <div>
-      <div className="font-bold text-2xl text-[#2C5C4B] mt-4">
-        Choose Your Tribe{" "}
+    <div className="p-4 mt-8">
+      <div className="text-center">
+        <h1 className="font-bold text-3xl text-green-800 mb-6">
+          Choose Your Tribe
+        </h1>
       </div>
-      {
-        userBetTribeId && <Link to={`/seeteammembers/${userBetTribeId}`}>
-          {" "}
-          <h1 className="bg-[#2C5C4B] text-lg text-white p-1 w-[210px] rounded-md">
+      {userBetTribeId && (
+        <Link
+          to={`/seeteammembers/${userBetTribeId}`}
+          className="block text-center transform transition-transform hover:scale-105"
+        >
+          <h1 className="bg-green-800 text-lg text-white py-2 px-4 w-44 rounded-md inline-block mt-4 hover:bg-green-600 transform transition-transform hover:scale-105">
             See Your Team Members
           </h1>
         </Link>
-      }
-      <div className="grid gap-[10px] sm:grid-cols lg:grid-cols-5 md:grid-cols-3">
-        {isLoading
-          ? "Loading..."
-          : error
-            ? "Something went wrong"
-            : data?.data?.map((tribe) => (
-              <TribeTiles key={tribe.id} item={tribe} />
-            ))}
+      )}
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6">
+        {isLoading ? (
+          <div className="text-gray-600">Loading...</div>
+        ) : error ? (
+          <div className="text-red-600">Something went wrong</div>
+        ) : (
+          data?.data?.map((tribe) => (
+            <TribeTiles
+              key={tribe.id}
+              item={tribe}
+              className="transform transition-transform hover:scale-105"
+            />
+          ))
+        )}
       </div>
     </div>
   );

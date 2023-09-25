@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import MyLogo from '../assets/GameLogo.png'
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-
+import greenbg from "../assets/greenbg.png";
 const TribePage = () => {
   const [user, setUser] = useState({
     gender: "male",
@@ -16,6 +16,8 @@ const TribePage = () => {
     socials: "",
   })
   const [profileImage, setProfileImage] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate()
 
   const handleImage = (e) => {
@@ -43,7 +45,7 @@ const TribePage = () => {
   }, [])
 
   const { id } = useParams();
-  const { isLoading, error, data, refetch } = useQuery({
+  const { data,  } = useQuery({
     queryKey: ['tribesingle'],
     queryFn: () => newRequest.get(`tribe/${id}`).then(res => {
       return res.data;
@@ -52,6 +54,7 @@ const TribePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading to tru
 
     const formData = new FormData();
     formData.append('profileImage', profileImage);
@@ -85,52 +88,61 @@ const TribePage = () => {
       console.error(error);
       toast.error(error.response.data.message)
       navigate(`/home`)
-    }
+    } finally {
+      setIsLoading(false);
+    } 
   };
 
   return (
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
-      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <div
+      className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl"
+      style={{
+        backgroundImage: `url(${greenbg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
-          class="mx-auto h-[100px] w-[150px]"
+          className="mx-auto h-[100px] w-[150px]"
           src={MyLogo}
           alt="Your Company"
         />
-        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           {data?.data?.name}
         </h2>
-        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           {data?.data?.memberCount}
         </h2>
-        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          {data?.data?.isFilled
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          {data?.data?.isFilled || data?.data?.memberCount >= 3
             ? "Sorry This group is filled up join another tribe"
             : "This group is not filled up yet"}
         </h2>
       </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form
-          class="space-y-6"
+          className="space-y-6"
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
           <div>
             <div className="flex items-center justify-between">
               <label
-                for=""
-                class="block text-md font-medium leading-6 text-gray-900"
+                htmlFor=""
+                className="block text-md font-medium leading-6 text-gray-900"
               >
                 BETWINNER ID
               </label>
               <label
-                for=""
-                class="block text-sm font-medium leading-6 text-white"
+                htmlFor=""
+                className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
               </label>
             </div>
-            <div class="mt-2">
+            <div className="mt-2">
               <input
                 id="betwinnerId"
                 name="betwinnerId"
@@ -140,26 +152,26 @@ const TribePage = () => {
                 title="Please enter a 6-digit number"
                 onChange={handleChange}
                 value={user.betwinnerId}
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
 
           <div>
-            <div class="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <label
-                for=""
-                class="block text-md font-medium leading-6 text-gray-900"
+                htmlFor=""
+                className="block text-md font-medium leading-6 text-gray-900"
               >
                 GENDER
               </label>
-              <div class="text-sm">
-                <a href="#" class="font-semibold text-white">
+              <div className="text-sm">
+                <a href="#" className="font-semibold text-white">
                   Forgot password?
                 </a>
               </div>
             </div>
-            <div class="mt-2">
+            <div className="mt-2">
               <select name="gender" id="gender" onChange={handleChange}>
                 <option value={"male"}>Male</option>
                 <option value={"female"}>Female</option>
@@ -169,20 +181,20 @@ const TribePage = () => {
           </div>
 
           <div>
-            <div class="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <label
-                for=""
-                class="block text-md font-medium leading-6 text-gray-900"
+                htmlFor=""
+                className="block text-md font-medium leading-6 text-gray-900"
               >
                 SHIRT SIZE
               </label>
-              <div class="text-sm">
-                <a href="#" class="font-semibold text-white">
+              <div className="text-sm">
+                <a href="#" className="font-semibold text-white">
                   Forgot password?
                 </a>
               </div>
             </div>
-            <div class="mt-2 rounded-lg">
+            <div className="mt-2 rounded-lg">
               <select name="shirtSize" id="shirtSize" onChange={handleChange}>
                 <option value={"S"}>Small</option>
                 <option value={"M"}>Medium</option>
@@ -196,26 +208,26 @@ const TribePage = () => {
           <div>
             <div className="flex items-center justify-between">
               <label
-                for=""
-                class="block text-md font-medium leading-6 text-gray-900"
+                htmlFor=""
+                className="block text-md font-medium leading-6 text-gray-900"
               >
                 INSTAGRAM MEDIA HANDLE
               </label>
               <label
-                for=""
-                class="block text-sm font-medium leading-6 text-white"
+                htmlFor=""
+                className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
               </label>
             </div>
-            <div class="mt-2">
+            <div className="mt-2">
               <input
                 id="socials"
                 name="socials"
                 type="text"
                 onChange={handleChange}
                 required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -223,19 +235,19 @@ const TribePage = () => {
           <div>
             <div className="flex items-center justify-between">
               <label
-                for=""
-                class="block text-md font-medium leading-6 text-gray-900"
+                htmlFor=""
+                className="block text-md font-medium leading-6 text-gray-900"
               >
                 EMAIL
               </label>
               <label
-                for=""
-                class="block text-sm font-medium leading-6 text-white"
+                htmlFor=""
+                className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
               </label>
             </div>
-            <div class="mt-2">
+            <div className="mt-2">
               <input
                 id="email"
                 name="email"
@@ -243,7 +255,7 @@ const TribePage = () => {
                 onChange={handleChange}
                 value={user.email}
                 required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
+                className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
           </div>
@@ -251,14 +263,14 @@ const TribePage = () => {
           <div>
             <div className="flex items-center justify-between">
               <label
-                for=""
-                class="block text-md font-medium leading-6 text-gray-900"
+                htmlFor=""
+                className="block text-md font-medium leading-6 text-gray-900"
               >
                 UPLOAD A CLEAR PICTURE
               </label>
               <label
-                for=""
-                class="block text-sm font-medium leading-6 text-white"
+                htmlFor=""
+                className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
               </label>
@@ -268,7 +280,7 @@ const TribePage = () => {
               type="file"
               name="file"
               onChange={handleImage}
-              class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              className="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="large_size"
             />
           </div>
@@ -276,9 +288,34 @@ const TribePage = () => {
           <div className="mt-4">
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md bg-[#2C5C4B] px-3 py-1.5 text-md font-semibold leading-6 text-[#FFC000] shadow-sm hover:bg-[#93C572] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 h-12"
+              className="flex w-full justify-center rounded-md px-3 py-1.5 text-md font-semibold leading-6 shadow-sm hover:bg-[#93C572] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 h-12"
+              disabled={
+                isLoading ||
+                data?.data?.isFilled ||
+                data?.data?.memberCount >= 3
+              }
+              style={{
+                backgroundColor:
+                  isLoading ||
+                  data?.data?.isFilled ||
+                  data?.data?.memberCount >= 3
+                    ? "#ccc"
+                    : "#2C5C4B",
+                color:
+                  isLoading ||
+                  data?.data?.isFilled ||
+                  data?.data?.memberCount >= 3
+                    ? "#999"
+                    : "#FFC000",
+                cursor:
+                  isLoading ||
+                  data?.data?.isFilled ||
+                  data?.data?.memberCount >= 3
+                    ? "not-allowed"
+                    : "pointer",
+              }}
             >
-              Register
+              {isLoading ? "Loading..." : "Join Tribe"}
             </button>
           </div>
         </form>
