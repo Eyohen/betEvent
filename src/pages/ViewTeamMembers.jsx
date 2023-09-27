@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import newRequest from "../utils/newRequest";
 import { useQuery } from "@tanstack/react-query";
-import greenbg from "../assets/greenbg.png";
 import yellowbg from "../assets/yellowbg.png"
 const ViewTeamMembers = () => {
   let { betTribeId } = useParams();

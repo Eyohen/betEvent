@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import MyLogo from '../assets/GameLogo.png'
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import greenbg from "../assets/greenbg.png";
 import yellowbg from "../assets/yellowbg.png"
 const TribePage = () => {
   const [user, setUser] = useState({
