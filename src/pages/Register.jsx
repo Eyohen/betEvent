@@ -4,7 +4,8 @@ import newRequest from "../utils/newRequest";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Intro from "../assets/Intro.png"
-import greenbg from "../assets/greenbg.png"
+// import greenbg from "../assets/greenbg.png"
+import yellowbg from "../assets/yellowbg.png"
 
 const Register = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ const [isLoading, setIsLoading] = useState(false);
     <div
       className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl bg-[#F2F2F2]"
       style={{
-        backgroundImage: `url(${greenbg})`,
+        backgroundImage: `url(${yellowbg})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}

@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import newRequest from "../utils/newRequest";
 import { useQuery } from "@tanstack/react-query";
 import greenbg from "../assets/greenbg.png";
+import yellowbg from "../assets/yellowbg.png"
 const ViewTeamMembers = () => {
   let { betTribeId } = useParams();
   const navigate = useNavigate();
@@ -29,9 +30,9 @@ const ViewTeamMembers = () => {
 
   return (
     <div
-      className="container mx-auto p-4 flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl"
+      className="container mx-auto p-4 flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl h-[100%]"
       style={{
-        backgroundImage: `url(${greenbg})`,
+        backgroundImage: `url(${yellowbg})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}

@@ -7,6 +7,7 @@ import MyLogo from '../assets/GameLogo.png'
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import greenbg from "../assets/greenbg.png";
+import yellowbg from "../assets/yellowbg.png"
 const TribePage = () => {
   const [user, setUser] = useState({
     gender: "male",
@@ -65,7 +66,7 @@ const TribePage = () => {
     formData.append('email', user.email);
     formData.append('betTribeId', id);
 
-    window.alert(JSON.stringify(formData))
+    // window.alert(JSON.stringify(formData))
 
     const dataToSend = Object.fromEntries(formData.entries());
     try {
@@ -97,7 +98,7 @@ const TribePage = () => {
     <div
       className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl"
       style={{
-        backgroundImage: `url(${greenbg})`,
+        backgroundImage: `url(${yellowbg})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
