@@ -328,10 +328,7 @@ const [isLoading, setIsLoading] = useState(false);
                 name="birthday"
                 selected={birthday}
                 onChange={handleDateChange}
-                showMonthYearDropdown
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
+              
                 dateFormat="yyyy-MM-dd"
                 maxDate={minDate}
                 // maxDate={today} // Optional: To prevent selecting future dates
