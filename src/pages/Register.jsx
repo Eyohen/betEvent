@@ -7,11 +7,15 @@ import Intro from "../assets/Intro.png"
 // import greenbg from "../assets/greenbg.png"
 import yellowbg from "../assets/yellowbg.png"
 
+
 const Register = () => {
   const navigate = useNavigate();
   const [birthday, setBirthday] = useState(null);
 const [showImagePopup, setShowImagePopup] = useState(true);
 const [isLoading, setIsLoading] = useState(false);
+
+
+
 
   const today = new Date();
   const minDate = new Date(
@@ -114,7 +118,7 @@ const [isLoading, setIsLoading] = useState(false);
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign up For Game Fiesta
+        Sign up for Games Fiesta
         </h2>
       </div>
 
@@ -185,6 +189,7 @@ const [isLoading, setIsLoading] = useState(false);
                 id="phone"
                 name="phone"
                 type="number"
+                placeholder="08123***"
                 onChange={handleChange}
                 required
                 className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
@@ -240,7 +245,7 @@ const [isLoading, setIsLoading] = useState(false);
                 id="country"
                 name="country"
                 type="text"
-                placeholder="08123***"
+                placeholder="e.g Nigeria"
                 onChange={handleChange}
                 required
                 className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
@@ -323,6 +328,7 @@ const [isLoading, setIsLoading] = useState(false);
                 name="birthday"
                 selected={birthday}
                 onChange={handleDateChange}
+              
                 dateFormat="yyyy-MM-dd"
                 maxDate={minDate}
                 yearDropdown
