@@ -123,12 +123,12 @@ const TribePage = () => {
               >
                 BETWINNER ID
               </label>
-              <label
+              {/* <label
                 for=""
                 class="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div class="mt-2">
               <input
@@ -201,12 +201,12 @@ const TribePage = () => {
               >
                 INSTAGRAM MEDIA HANDLE
               </label>
-              <label
+              {/* <label
                 for=""
                 class="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div class="mt-2">
               <input
@@ -228,12 +228,12 @@ const TribePage = () => {
               >
                 EMAIL
               </label>
-              <label
+              {/* <label
                 for=""
                 class="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div class="mt-2">
               <input
@@ -256,12 +256,12 @@ const TribePage = () => {
               >
                 UPLOAD A CLEAR PICTURE
               </label>
-              <label
+              {/* <label
                 for=""
                 class="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
 
             <input
@@ -278,7 +278,7 @@ const TribePage = () => {
               type="submit"
               class="flex w-full justify-center rounded-md bg-[#2C5C4B] px-3 py-1.5 text-md font-semibold leading-6 text-[#FFC000] shadow-sm hover:bg-[#93C572] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 h-12"
             >
-              Register
+              JOIN TRIBE
             </button>
           </div>
         </form>

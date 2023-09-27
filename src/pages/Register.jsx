@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import newRequest from "../utils/newRequest";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Background from "../assets/2.png"
 
 const Register = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl mt-16">
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 shadow-xl rounded-xl" style={{background:`url(${Background})`}} >
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-[100px] w-[150px]"
@@ -87,7 +88,7 @@ const Register = () => {
               >
                 FIRST NAME
               </label>
-              <label className="text-white">ignore</label>
+              {/* <label className="text-white">ignore</label> */}
             </div>
             <div className="mt-2">
               <input
@@ -109,7 +110,7 @@ const Register = () => {
               >
                 LAST NAME
               </label>
-              <label className="text-white">ignore</label>
+              {/* <label className="text-white">ignore</label> */}
             </div>
             <div className="mt-2">
               <input
@@ -131,12 +132,12 @@ const Register = () => {
               >
                 PHONE NUMBER
               </label>
-              <label
+              {/* <label
                 htmlFor=""
                 className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div className="mt-2">
               <input
@@ -158,12 +159,12 @@ const Register = () => {
               >
                 EMAIL ADDRESS
               </label>
-              <label
+              {/* <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div className="mt-2">
               <input
@@ -186,12 +187,12 @@ const Register = () => {
               >
                 COUNTRY
               </label>
-              <label
+              {/* <label
                 htmlFor=""
                 className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div className="mt-2">
               <input
@@ -213,12 +214,12 @@ const Register = () => {
               >
                 STATE
               </label>
-              <label
+              {/* <label
                 htmlFor=""
                 className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div className="mt-2">
               <input
@@ -240,12 +241,12 @@ const Register = () => {
               >
                 CITY
               </label>
-              <label
+              {/* <label
                 htmlFor=""
                 className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div className="mt-2">
               <input
@@ -266,12 +267,12 @@ const Register = () => {
               >
                 DATE OF BIRTH
               </label>
-              <label
+              {/* <label
                 htmlFor=""
                 className="block text-sm font-medium leading-6 text-white"
               >
                 ignore
-              </label>
+              </label> */}
             </div>
             <div className="mt-2">
               {/* Date Picker */}
