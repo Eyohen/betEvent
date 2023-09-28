@@ -328,11 +328,10 @@ const [isLoading, setIsLoading] = useState(false);
                 name="birthday"
                 selected={birthday}
                 onChange={handleDateChange}
-              
+                dropdownMode= "select"
                 dateFormat="yyyy-MM-dd"
                 maxDate={minDate}
                 yearDropdown
-                scrollableYearDropdown
                 showMonthDropdown
                 showYearDropdown
                 scrollableMonthDropdown
