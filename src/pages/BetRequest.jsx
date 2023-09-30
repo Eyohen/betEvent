@@ -82,9 +82,9 @@ return (
               <input
                 type="number"
                 required
-                pattern="[0-9]{6}" // This pattern allows only 6-digit numbers
-                title="Please enter a 6-digit number"
-                maxLength="6"
+                pattern="[0-9]{9}" // This pattern allows only 6-digit numbers
+                title="Please enter a 9-digit number"
+                maxLength="9"
                 className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-12"
               />
             </div>
